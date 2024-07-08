@@ -7,10 +7,12 @@
 - [Creative Writing Through Hybrid AI Collaboration](#creative-writing-through-hybrid-ai-collaboration)
   - [Table of Contents](#table-of-contents)
   - [About](#about)
-  - [Configuring the Environment](#configuring-the-environment)
-    - [Environment](#environment)
+  - [Installing Required Software](#installing-required-software)
+    - [System Environment](#system-environment)
     - [Install Docker](#install-docker)
     - [Install Ollama](#install-ollama)
+    - [Install Llama 3 in Ollama](#install-llama-3-in-ollama)
+    - [Install Open WebUI](#install-open-webui)
 
 ## About
 
@@ -22,13 +24,13 @@ and [Open WebUI](https://github.com/open-webui/open-webui) to provide a local,
 controlled AI environment where researchers can monitor, evaltuate, and analyze
 user quieries and AI responses.
 
-## Configuring the Environment
+## Installing Required Software
 
 We leverage Docker in order to abstract away the hardware platform to use as
 well as control for technical variables such as software versions, and
 availibility of tools.
 
-### Environment
+### System Environment
 
 This environment was tested to work on x86-64 Linux.
 
@@ -42,15 +44,38 @@ Up to date instructions on how to install the Docker Engine are provided
 Ollama provides an HTTP server and REST API wrapper around the high-performance
 [llama.cpp](https://github.com/ggerganov/llama.cpp) inference engine.
 
-How to set up Ollama
+Instructions to add NVIDIA or AMD GPU support are described here
+[here](https://hub.docker.com/r/ollama/ollama).
 
-1. Follow instructions on https://ollama.com/download/linux
-1. Run the command "ollama serve" on ubuntu and navigate to
-   http://127.0.0.1:11434/ to verify that Ollama is working
+Ollama (with GPU support) can be installed as a Docker container with:
 
-How to set up Open WebUI
+```shell
+docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+```
 
-1. Run the command "docker run -d -p 3000:8080
-   --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data
-   --name open-webui --restart always ghcr.io/open-webui/open-webui:main" in
-   Windows PowerShell
+Further configurations to install Ollama via Docker are described
+[here](https://hub.docker.com/r/ollama/ollama).
+
+### Install Llama 3 in Ollama
+
+[Llama3](https://llama.meta.com/llama3/) is a LLM provided by Meta that can be
+ran with Ollama.
+
+To install Llama 3, run:
+
+```shell
+docker exec -it ollama ollama pull llama3
+```
+
+Other Ollama compatible models are provided [here](https://ollama.com/library).
+
+### Install Open WebUI
+
+Open WebUI is a web interface similar to OpenAI's ChatGPT interface that allows
+for inferencing with Ollama and OpenAI models.
+
+To install Open WebUI, run:
+
+```shell
+docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+```
