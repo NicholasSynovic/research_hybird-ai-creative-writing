@@ -51,7 +51,7 @@ Instructions to add NVIDIA or AMD GPU support are described here
 Ollama (with GPU support) can be installed as a Docker container with:
 
 ```shell
-docker run -d --restart always --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
 ```
 
 Further configurations to install Ollama via Docker are described
