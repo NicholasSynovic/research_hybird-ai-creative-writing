@@ -1,114 +1,190 @@
-# Creative Writing Through Hybrid AI Collaboration
+# Base Template Repository
 
-> A research project in collaboration with the LUC Psychology Department.
+> A base template repository that all other *template repos* can inherit from to
+> ensure tooling consistency
 
 ## Table of Contents
 
-- [Creative Writing Through Hybrid AI Collaboration](#creative-writing-through-hybrid-ai-collaboration)
+- [Base Template Repository](#base-template-repository)
   - [Table of Contents](#table-of-contents)
   - [About](#about)
-  - [Installing Required Software](#installing-required-software)
-    - [System Environment](#system-environment)
-    - [Install Docker](#install-docker)
-    - [Install Ollama](#install-ollama)
-    - [Install Llama 3 in Ollama](#install-llama-3-in-ollama)
-    - [Install Open WebUI](#install-open-webui)
-  - [Configuring Open WebUI](#configuring-open-webui)
+  - [Supported Tooling](#supported-tooling)
+    - [Visual Studio Code](#visual-studio-code)
+      - [Development Containers](#development-containers)
+    - [GitHub](#github)
+      - [GitHub Pages](#github-pages)
+      - [Discussion Templates](#discussion-templates)
+      - [Actions](#actions)
+      - [Issue Templates](#issue-templates)
+    - [Pre-Commit](#pre-commit)
+      - [Hooks](#hooks)
+    - [Docker](#docker)
+    - [Make](#make)
+    - [RAD](#rad)
+    - [EditorConfig](#editorconfig)
+  - [Template Structure](#template-structure)
 
 ## About
 
-This repository contains the files and steps required to setup the technical
-aspects of the software suite for this research.
+This is a template repository that is intended to be inherited by other template
+repositories *to ensure consistent common tool deployment across languages*.
 
-Currently, this research leverages [Ollama](https://github.com/ollama/ollama)
-and [Open WebUI](https://github.com/open-webui/open-webui) to provide a local,
-controlled AI environment where researchers can monitor, evaltuate, and analyze
-user quieries and AI responses.
+This will also support *optional* tooling that services like GitHub offer in
+order to provide repository owners access to these features without them having
+to discover it themselves.
 
-## Installing Required Software
+Additionally, while projects can leverage this template or its content, this
+template is primarily intended to build other templates off of it.
 
-We leverage Docker in order to abstract away the hardware platform to use as
-well as control for technical variables such as software versions, and
-availibility of tools.
+## Supported Tooling
 
-### System Environment
+### Visual Studio Code
 
-This environment was tested to work on x86-64 Linux.
+- Website: [https://code.visualstudio.com/](https://code.visualstudio.com/)
+- File(s):
+  - Development Containers: [.devcontainer/](.devcontainer/)
 
-### Install Docker
+#### Development Containers
 
-Up to date instructions on how to install the Docker Engine are provided
-[here](https://docs.docker.com/engine/install/).
+- File: [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json)
+- Documentation:
+  [https://containers.dev/implementors/json_reference](https://containers.dev/implementors/json_reference)
+- Base image: [alpine:latest](https://hub.docker.com/_/alpine/)
+- Extensions:
+  - [CodeSnap](https://marketplace.visualstudio.com/items?itemName=adpyke.codesnap)
+  - [File Tree Generator](https://marketplace.visualstudio.com/items?itemName=Shinotatwu-DS.file-tree-generator)
+  - [Markdown All In One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+  - [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+    - Config file: [.markdownlint.json](.markdownlint.json)
+  - [vscode-icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
+  - [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+  - [Makefile Tools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.makefile-tools)
+  - [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+    - Config file: [.editorconfig](.editorconfig)
 
-### Install Ollama
+### GitHub
 
-Ollama provides an HTTP server and REST API wrapper around the high-performance
-[llama.cpp](https://github.com/ggerganov/llama.cpp) inference engine.
+- Website: [https://github.com](https://github.com)
+- File(s): [.github/](.github/)
+- Documentation:
+  [https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file](https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file)
+- Features
+  - Code Of Conduct: [.github/CODE_OF_CONDUCT.md](.github/CODE_OF_CONDUCT.md)
+  - Code Owners: [.github/CODEOWNERS](.github/CODEOWNERS)
+  - Citations: [CITATION.cff](CITATION.cff)
+  - Contributing Guide: [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
+  - Funding: [.github/FUNDING.yml](.github/FUNDING.yml)
+  - Governance: [.github/GOVERNANCE.md](.github/GOVERNANCE.md)
+  - Security: [.github/SECURITY.md](.github/SECURITY.md)
+  - Support: [.github/SUPPORT.md](.github/SUPPORT.md)
 
-Instructions to add NVIDIA or AMD GPU support are described here
-[here](https://hub.docker.com/r/ollama/ollama).
+#### GitHub Pages
 
-Ollama (with GPU support) can be installed as a Docker container with:
+- File: [\_config.yml](_config.yml)
+- Documentation:
+  [https://docs.github.com/en/pages](https://docs.github.com/en/pages)
+
+#### Discussion Templates
+
+- File(s): [.github/DISCUSSION_TEMPLATE/](.github/DISCUSSION_TEMPLATE/)
+- Documentation:
+  [https://docs.github.com/en/discussions/managing-discussions-for-your-community/creating-discussion-category-forms](https://docs.github.com/en/discussions/managing-discussions-for-your-community/creating-discussion-category-forms)
+- Templates:
+  - Implentation:
+    [.github/DISCUSSION_TEMPLATE/implementations.yml](.github/DISCUSSION_TEMPLATE/implementations.yml)
+  - Requests:
+    [.github/DISCUSSION_TEMPLATE/requests.yml](.github/DISCUSSION_TEMPLATE/requests.yml)
+
+#### Actions
+
+- File(s): [.github/workflows/](.github/workflows/)
+- Documentation:
+  [https://docs.github.com/en/actions](https://docs.github.com/en/actions)
+- Actions:
+  - Pre-Commit:
+    [.github/workflows/pre-commit.yml](.github/workflows/pre-commit.yml)
+    - Documentation:
+      [https://github.com/pre-commit/action](https://github.com/pre-commit/action)
+  - GitHub Pages Publishing:
+    [.github/workflows/jekyll-gh-pages.yml](.github/workflows/jekyll-gh-pages.yml)
+
+#### Issue Templates
+
+- File(s): [.github/ISSUE_TEMPLATE/](.github/ISSUE_TEMPLATE/)
+- Templates:
+  - Bug Reports:
+    [.github/ISSUE_TEMPLATE/bug-report.yml](.github/ISSUE_TEMPLATE/bug-report.yml)
+
+### Pre-Commit
+
+- Website: [https://pre-commit.com/](https://pre-commit.com/)
+- File: [.pre-commit.yaml](.pre-commit.yaml)
+
+#### Hooks
+
+- [mdformat](https://github.com/executablebooks/mdformat)
+  - Config: [.mdformat.toml](.mdformat.toml)
+
+### Docker
+
+- Website: [https://www.docker.com/](https://www.docker.com/)
+- File: [Dockerfile](Dockerfile)
+- Base image: [alpine:latest](https://hub.docker.com/_/alpine/)
+
+### Make
+
+- Website: [https://makefiletutorial.com/](https://makefiletutorial.com/)
+- File: [Makefile](Makefile)
+- Targets:
+  - `build`
+  - `create-dev`
+
+### RAD
+
+- Website:
+  [https://github.com/NicholasSynovic/tool_rad](https://github.com/NicholasSynovic/tool_rad)
+- File: [.rad.json](.rad.json)
+
+### EditorConfig
+
+- Website: [https://editorconfig.org/](https://editorconfig.org/)
+- File: [.editorconfig](.editorconfig)
+
+## Template Structure
+
+Generated with
+[File Tree Generator](https://marketplace.visualstudio.com/items?itemName=Shinotatwu-DS.file-tree-generator)
 
 ```shell
-docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+📦template_base
+ ┣ 📂.devcontainer
+ ┃ ┗ 📜devcontainer.json
+ ┣ 📂.github
+ ┃ ┣ 📂DISCUSSION_TEMPLATE
+ ┃ ┃ ┣ 📜implementations.yml
+ ┃ ┃ ┗ 📜requests.yml
+ ┃ ┣ 📂ISSUE_TEMPLATE
+ ┃ ┃ ┗ 📜bug-report.yml
+ ┃ ┣ 📂workflows
+ ┃ ┃ ┣ 📜jekyll-gh-pages.yml
+ ┃ ┃ ┗ 📜pre-commit.yml
+ ┃ ┣ 📜CODEOWNERS
+ ┃ ┣ 📜CODE_OF_CONDUCT.md
+ ┃ ┣ 📜CONTRIBUTING.md
+ ┃ ┣ 📜FUNDING.yml
+ ┃ ┣ 📜GOVERNANCE.md
+ ┃ ┣ 📜SECURITY.md
+ ┃ ┗ 📜SUPPORT.md
+ ┣ 📂docs
+ ┃ ┗ 📜.gitkeep
+ ┣ 📜.editorconfig
+ ┣ 📜.markdownlint.json
+ ┣ 📜.mdformat.toml
+ ┣ 📜.pre-commit-config.yaml
+ ┣ 📜.rad.json
+ ┣ 📜CITATION.cff
+ ┣ 📜Dockerfile
+ ┣ 📜LICENSE
+ ┣ 📜Makefile
+ ┗ 📜README.md
 ```
-
-Further configurations to install Ollama via Docker are described
-[here](https://hub.docker.com/r/ollama/ollama).
-
-### Install Llama 3 in Ollama
-
-[Llama3](https://llama.meta.com/llama3/) is a LLM provided by Meta that can be
-ran with Ollama.
-
-To install Llama 3, run:
-
-```shell
-docker exec -it ollama ollama pull llama3
-```
-
-Other Ollama compatible models are provided [here](https://ollama.com/library).
-
-### Install Open WebUI
-
-[Open WebUI](https://github.com/open-webui/open-webui) is a web interface
-similar to OpenAI's ChatGPT interface that allows for inferencing with Ollama
-and OpenAI models.
-
-To install Open WebUI, run:
-
-```shell
-docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_BASE_URL=http://127.0.0.1:11434 --name open-webui ghcr.io/open-webui/open-webui:main
-```
-
-## Configuring Open WebUI
-
-- After installing Open WebUI, you can access the application by visiting
-  [http://localhost:8080](http://localhost:8080)
-
-![Open WebUI](img/openWebUI_0.png)
-
-- Create a new account by clicking *Sign up*
-
-![Open WebUI](img/openWebUI_1.png)
-
-- Click your user icon in the top left corner
-
-![Open WebUI](img/openWebUI_2.png)
-
-- Click *Admin Panel*, then click the *Settings* button
-
-![Open WebUI](img/openWebUI_3.png)
-
-- Click *Connections*, then ensure that the *Ollama API* is set to
-  [http://127.0.0.1:11434](http://127.0.0.1:11434) and click the *Verify
-  Connection* (the left most icon to the text box) icon to verify the
-  connection.
-
-![Open WebUI](img/openWebUI_4.png)
-
-- Click *New Chat* in the top right, then click the *Select a model* dropdown
-  and chooses *llama3:latest 8.0B*
-
-![Open WebUI](img/openWebUI_5.png)
