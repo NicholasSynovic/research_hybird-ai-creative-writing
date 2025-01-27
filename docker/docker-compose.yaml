@@ -6,6 +6,8 @@ services:
     container_name: ollama
     image: ollama/ollama:0.5.7
     restart: always
+    networks:
+      - ollama-network
     ports:
       - "11434:11434"
     volumes:
@@ -23,10 +25,16 @@ services:
     restart: always
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - ollama-network
     ports:
       - "3000:8080"
     volumes:
       - open-webui:/app/backend/data
+
+networks:
+  ollama-network:
+    external: false
 
 volumes:
   ollama:
