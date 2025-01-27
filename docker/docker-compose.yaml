@@ -32,6 +32,19 @@ services:
     volumes:
       - open-webui:/app/backend/data
 
+  nginx:
+    container_name: nginx
+    image: hawc_nginx
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: always
+    networks:
+      - ollama-network
+    ports:
+      - "80:80"
+    depends_on:
+      - open-webui
+
 networks:
   ollama-network:
     external: false
